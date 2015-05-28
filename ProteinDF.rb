@@ -1,7 +1,7 @@
 require 'formula'
 
 HOMEBREW_PROTEINDF_VERSION = '2014.0.3'
-class ProteinDF < Formula
+class proteindf < Formula
   homepage 'https://github.com/ProteinDF/ProteinDF'
   url 'https://github.com/ProteinDF/ProteinDF.git', :tag => "#{HOMEBREW_PROTEINDF_VERSION}"
   version HOMEBREW_PROTEINDF_VERSION
