@@ -9,20 +9,22 @@ HOMEBREW_PROTEINDF_VERSION = '2014.0.3'
 class Proteindf < Formula
   homepage 'https://github.com/ProteinDF/ProteinDF'
   url 'https://github.com/ProteinDF/ProteinDF.git', :tag => "#{HOMEBREW_PROTEINDF_VERSION}"
-  version HOMEBREW_PROTEINDF_VERSION
+  version #{HOMEBREW_PROTEINDF_VERSION}
   head 'http://github.com/ProteinDF/ProteinDF.git', :branch => 'master'
 
   depends_on "automake" => :build
   depends_on "autoconf" => :build
   depends_on "libtool" => :build
   depends_on :fortran
-  depends_on "lapack" => ["with-blas", "with-lapack"]
+  # depends_on "lapack" => ["with-blas", "with-lapack", :recomended]
+  depends_on "lapack"
 
   depends_on :mpi => [:cc, :cxx, :f90, :recommended]
-  if build.with? "mpi"
-    depends_on "scalapack" => ["with-scalapack", :recomended]
-  end
-  option "with-openmp", "Build using OpenMP"
+  #if build.with? "mpi"
+  #  depends_on "scalapack" => ["with-scalapack", :recomended]
+  #end
+  depends_on "scalapack" => :recommended
+  option "without-openmp", "Build using OpenMP"
 
 
   def install
@@ -35,9 +37,9 @@ class Proteindf < Formula
       "--prefix=#{prefix}",
       "--disable-debug",
       "--disable-profile",
+      "--with-blas",
+      "--with-lapack"
     ]
-    conf_args << "--with-blas" if build.with? "blas"
-    conf_args << "--with-lapack" if build.with? "lapack"
 
     if build.with? "mpi"
       conf_args << "--enable-parallel"
@@ -49,11 +51,13 @@ class Proteindf < Formula
     system "./configure", *conf_args
     system "make"
     system "make", "install"
-
-    ohai "Set PDF_HOME env parameter to use ProteinDF,"
-    ohai "PDF_HOME=#{PREFIX}" 
   end
+
+  def caveats
+    ohai "Set PDF_HOME env parameter to use ProteinDF, PDF_HOME=#{prefix}"
+  end
+
 end
 
-
+__END__
   
