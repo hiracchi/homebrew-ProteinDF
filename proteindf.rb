@@ -12,18 +12,14 @@ class Proteindf < Formula
   version #{HOMEBREW_PROTEINDF_VERSION}
   head 'http://github.com/ProteinDF/ProteinDF.git', :branch => 'master'
 
-  depends_on "automake" => :build
-  depends_on "autoconf" => :build
-  depends_on "libtool" => :build
+  depends_on :automake
+  depends_on :autoconf
+  depends_on :libtool
   depends_on :fortran
-  # depends_on "lapack" => ["with-blas", "with-lapack", :recomended]
-  depends_on "lapack"
+  depends_on :lapack
 
-  depends_on :mpi => [:cc, :cxx, :f90, :recommended]
-  #if build.with? "mpi"
-  #  depends_on "scalapack" => ["with-scalapack", :recomended]
-  #end
-  depends_on "scalapack" => :recommended
+  depends_on :mpi => [:cc, :cxx, :recommended ]
+  depends_on :scalapack => :recommended
   option "without-openmp", "Build using OpenMP"
 
 
@@ -60,4 +56,4 @@ class Proteindf < Formula
 end
 
 __END__
-  
+
