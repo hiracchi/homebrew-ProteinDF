@@ -12,20 +12,20 @@ class Proteindf < Formula
   version #{HOMEBREW_PROTEINDF_VERSION}
   head 'http://github.com/ProteinDF/ProteinDF.git', :branch => 'master'
 
-  depends_on :automake
-  depends_on :autoconf
-  depends_on :libtool
+  depends_on "automake"
+  depends_on "autoconf"
+  depends_on "libtool"
   depends_on :fortran
-  depends_on :lapack
+  depends_on "lapack"
 
   depends_on :mpi => [:cc, :cxx, :recommended ]
-  depends_on :scalapack => :recommended
-  option "without-openmp", "Build using OpenMP"
+  depends_on "scalapack" => :recommended
+  # option "without-openmp", "Build using OpenMP"
 
 
   def install
     # ENV.deparallelize  # if your formula fails when building in parallel
-    ENV.append_to_cflags "-fopenmp" if build.with? "openmp"
+    # ENV.append_to_cflags "-fopenmp" if build.with? "openmp"
     
     system "./bootstrap.sh"
 
